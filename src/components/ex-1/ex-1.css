@@ -1,7 +1,7 @@
-.ex-1-app {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+.bg-header {
+  background: linear-gradient(#7261ab, #5a5eaa);
+}
+.bg-employee-answer,
+.bg-input {
+  background-color: #2a396b;
 }
