@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './ex-1.css';
 import people from './people';
 import { msgIcon } from '../../assets/ex-1/images/index';
@@ -20,25 +20,45 @@ const Employees = ({ peopleEmployee }) => {
 };
 
 const EmployeesAnswer = ({ peopleAnswer }) => {
+  const [showContent, setShowContent] = useState(false);
+  useEffect(() => {
+    const delay = 2000; // 2 sekundy
+
+    const delayFunction = async () => {
+      // Utwórz obiekt Promise, który rozwiązuje się po upływie określonego opóźnienia
+      const delayPromise = () =>
+        new Promise((resolve) => setTimeout(resolve, delay));
+
+      // Oczekaj na rozwiązanie obietnicy przed ustawieniem showContent na true
+      await delayPromise();
+
+      // Po rozwiązaniu obietnicy ustaw showContent na true, aby wyświetlić treść komponentu
+      setShowContent(true);
+    };
+
+    // Wywołanie funkcji opóźnienia
+    delayFunction();
+  }, []);
   return (
     <>
-      {peopleAnswer.map(
-        (p, index) =>
-          index === 2 && (
-            <div
-              className="flex items-start gap-2 px-4 py-2"
-              key={p.name + index}
-            >
-              <img
-                src={p.photo}
-                className="w-[40px] h-[40px] rounded-full border-2 border-white"
-              />
-              <p className="max-w-max p-3 rounded-xl text-white bg-employee-answer text-sm">
-                {p.message}
-              </p>
-            </div>
-          )
-      )}
+      {showContent &&
+        peopleAnswer.map(
+          (p, index) =>
+            index === 2 && (
+              <div
+                className="flex items-start gap-2 px-4 py-2"
+                key={p.name + index}
+              >
+                <img
+                  src={p.photo}
+                  className="w-[40px] h-[40px] rounded-full border-2 border-white"
+                />
+                <p className="max-w-max p-3 rounded-xl text-white bg-employee-answer text-sm">
+                  {p.message}
+                </p>
+              </div>
+            )
+        )}
     </>
   );
 };
