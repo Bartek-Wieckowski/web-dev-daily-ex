@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './ex-1.css';
 import people from './people';
+import { msgIcon } from '../../assets/ex-1/images/index';
 
 const Employees = ({ peopleEmployee }) => {
   return (
@@ -88,6 +89,7 @@ const Form = ({ onAddItem }) => {
 };
 
 const Exercise1 = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const [userAnsw, setUserAnsw] = useState([]);
 
   const handleAddAnswer = (ans) => {
@@ -96,27 +98,49 @@ const Exercise1 = () => {
 
   return (
     <section className="bg-white text-black">
-      <div className="container mx-auto flex justify-center items-center min-h-screen w-full">
-        <div className="m-w-[350px] h-[400px] bg-slate-800 rounded-t-xl">
-          <header className="flex items-center justify-between px-4 gap-4 rounded-xl bg-header py-5">
-            <Employees peopleEmployee={people} />
-            <div className="flex flex-col">
-              <h4 className="text-white font-bold text-sm">
-                {people.map((p) => p.name).join(', ')}
-              </h4>
-              <p className="text-white font-light text-xs">
-                We typically reply in a few minutes
-              </p>
+      <div className="container mx-auto flex justify-center items-center min-h-screen w-full gap-x-2">
+        {isOpen && (
+          <div className="m-w-[350px] h-[400px] bg-slate-800 rounded-t-xl">
+            <header className="flex items-center justify-between px-4 gap-4 rounded-xl bg-header py-5">
+              <Employees peopleEmployee={people} />
+              <div className="flex flex-col">
+                <h4 className="text-white font-bold text-sm">
+                  {people.map((p) => p.name).join(', ')}
+                </h4>
+                <p className="text-white font-light text-xs">
+                  We typically reply in a few minutes
+                </p>
+              </div>
+            </header>
+            <div className="mt-4 w-full">
+              <div className="h-[300px] overflow-y-auto">
+                <EmployeesAnswer peopleAnswer={people} />
+                {userAnsw.length > 0 && <UserText userAnsw={userAnsw} />}
+              </div>
+              <Form onAddItem={handleAddAnswer} />
             </div>
-          </header>
-          <div className="mt-4 w-full">
-            <div className="h-[300px] overflow-y-auto">
-              <EmployeesAnswer peopleAnswer={people} />
-              {userAnsw.length > 0 && <UserText userAnsw={userAnsw} />}
-            </div>
-            <Form onAddItem={handleAddAnswer} />
           </div>
-        </div>
+        )}
+        {isOpen ? (
+          <button
+            className={`close text-white text-4xl rounded-full w-[60px] h-[60px]  flex items-center justify-center ${
+              isOpen ? 'self-end' : ''
+            }`}
+            onClick={() => setIsOpen((prev) => !prev)}
+          >
+            X
+          </button>
+        ) : (
+          <button
+            onClick={() => setIsOpen((prev) => !prev)}
+            className="relative"
+          >
+            <img src={msgIcon} alt="icon" />
+            <span className="absolute right-0 top-0 rounded-full bg-red-600 w-4 h-4 top right p-0 m-0 text-white font-mono text-sm leading-tight text-center">
+              1
+            </span>
+          </button>
+        )}
       </div>
     </section>
   );
