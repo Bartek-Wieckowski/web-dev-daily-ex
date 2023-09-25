@@ -4,15 +4,15 @@ import Exercise1 from './components/ex-1/Exercise1';
 function App() {
   return (
     <section>
-      <nav className="nav">
-        <ul>
+      <nav className="container px-6 mx-auto nav">
+        <ul className="flex items-center justify-between p-4">
           <li>prev</li>
           <li>next</li>
         </ul>
       </nav>
       <BrowserRouter>
         <Routes>
-          <Route path="/1" element={<Exercise1 />} />
+          <Route path="/ex1" element={<Exercise1 />} />
         </Routes>
       </BrowserRouter>
     </section>
