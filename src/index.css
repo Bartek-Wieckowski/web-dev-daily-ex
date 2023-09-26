@@ -6,3 +6,12 @@ body {
   background-color: #2c2c2c;
   color: #fff;
 }
+
+.ex1-bg-header,
+.ex1-close {
+  background: linear-gradient(#7261ab, #5a5eaa);
+}
+.ex1-bg-employee-answer,
+.ex1-bg-input {
+  background-color: #2a396b;
+}
