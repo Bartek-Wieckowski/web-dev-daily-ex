@@ -19,26 +19,26 @@ const Employees = ({ peopleEmployee }) => {
   );
 };
 
-const EmployeesAnswer = ({ peopleAnswer }) => {
+const EmployeesAnswer = ({ peopleAnswer, clickNum }) => {
   const [showContent, setShowContent] = useState(false);
   useEffect(() => {
-    const delay = 2000; // 2 sekundy
+    if (clickNum <= 1) {
+      const delay = 2000;
 
-    const delayFunction = async () => {
-      // Utwórz obiekt Promise, który rozwiązuje się po upływie określonego opóźnienia
-      const delayPromise = () =>
-        new Promise((resolve) => setTimeout(resolve, delay));
+      const delayFunction = async () => {
+        const delayPromise = () =>
+          new Promise((resolve) => setTimeout(resolve, delay));
 
-      // Oczekaj na rozwiązanie obietnicy przed ustawieniem showContent na true
-      await delayPromise();
+        await delayPromise();
 
-      // Po rozwiązaniu obietnicy ustaw showContent na true, aby wyświetlić treść komponentu
+        setShowContent(true);
+      };
+
+      delayFunction();
+    } else {
       setShowContent(true);
-    };
-
-    // Wywołanie funkcji opóźnienia
-    delayFunction();
-  }, []);
+    }
+  }, [clickNum]);
   return (
     <>
       {showContent &&
@@ -111,9 +111,16 @@ const Form = ({ onAddItem }) => {
 const Exercise1 = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [userAnsw, setUserAnsw] = useState([]);
+  const [clickNum, setClickNum] = useState(0);
+  const [isTooltip, setIsTooltip] = useState(false);
 
   const handleAddAnswer = (ans) => {
     setUserAnsw((userAnsw) => [...userAnsw, ans]);
+  };
+
+  const handleOpenMenuAndCounClick = () => {
+    setIsOpen((prev) => !prev);
+    setClickNum((prev) => prev + 1);
   };
 
   return (
@@ -134,7 +141,7 @@ const Exercise1 = () => {
             </header>
             <div className="mt-4 w-full">
               <div className="h-[300px] overflow-y-auto">
-                <EmployeesAnswer peopleAnswer={people} />
+                <EmployeesAnswer peopleAnswer={people} clickNum={clickNum} />
                 {userAnsw.length > 0 && <UserText userAnsw={userAnsw} />}
               </div>
               <Form onAddItem={handleAddAnswer} />
@@ -151,15 +158,24 @@ const Exercise1 = () => {
             X
           </button>
         ) : (
-          <button
-            onClick={() => setIsOpen((prev) => !prev)}
-            className="relative"
-          >
-            <img src={msgIcon} alt="icon" />
-            <span className="absolute right-0 top-0 rounded-full bg-red-600 w-4 h-4 top right p-0 m-0 text-white font-mono text-sm leading-tight text-center">
-              1
-            </span>
-          </button>
+          <>
+            <button
+              onClick={handleOpenMenuAndCounClick}
+              onMouseEnter={() => setIsTooltip(true)}
+              onMouseLeave={() => setIsTooltip(false)}
+              type="button"
+            >
+              <img src={msgIcon} alt="icon" />
+            </button>
+            <div
+              role="tooltip"
+              className={`absolute top-1/2 z-10  inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm  dark:bg-gray-700 ${
+                isTooltip ? 'visible opacity-100' : 'invisible opacity-0'
+              }`}
+            >
+              You can write message for us! Just Click!
+            </div>
+          </>
         )}
       </div>
     </section>
