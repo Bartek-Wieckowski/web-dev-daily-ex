@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import { aprv, unaprv } from '../../assets/ex-4';
+
 const Card = (card) => {
   const { imgSrc, title, description, verified: status } = card;
   const [isTooltip, setIsTooltip] = useState(false);
+
   function show() {
     setIsTooltip(true);
   }
   function hide() {
     setIsTooltip(false);
   }
+
   return (
     <div className="grid grid-cols-[100px,1fr]">
       <img
