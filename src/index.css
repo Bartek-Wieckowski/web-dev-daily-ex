@@ -30,7 +30,9 @@ body {
   left: 0;
   right: 0;
 }
-.ex4-expand-transition {
+.ex4-expand {
   max-height: 1500px;
-  transition: max-height 0.3s ease-in-out;
+}
+.ex4-transition {
+  transition: max-height 0.3s ease-in;
 }
