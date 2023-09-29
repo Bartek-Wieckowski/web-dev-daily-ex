@@ -17,10 +17,10 @@ const Wrapper = ({ children }) => {
           better,together.
         </p>
         <div
-          className={`pt-12 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6  xl:gap-12 ${
+          className={`pt-8 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6  xl:gap-12 ${
             isExpanded
-              ? 'ex4-expand-transition'
-              : 'max-h-[215px] overflow-hidden'
+              ? 'ex4-expand ex4-transition'
+              : 'max-h-[252px] ex4-transition overflow-hidden'
           }`}
         >
           {children}
