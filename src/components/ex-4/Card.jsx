@@ -13,13 +13,13 @@ const Card = (card) => {
   }
 
   return (
-    <div className="grid grid-cols-[100px,1fr]">
+    <div className="grid grid-col sm:grid-cols-[100px,1fr]">
       <img
         src={imgSrc}
         alt={title}
-        className="col-span-1 w-[80px] h-[80px] rounded-full"
+        className="col-span-1 w-[80px] h-[80px] mx-auto rounded-full"
       />
-      <div className="flex flex-col gap-y-3 max-w-[80%] relative">
+      <div className="relative flex flex-col gap-y-3 max-w-[80%] mx-auto sm:mr-auto sm:ml-0 text-center sm:text-left items-center sm:items-start">
         <div className="flex gap-x-3 items-center">
           <h4 className="font-medium">{title}</h4>
           {status && (
