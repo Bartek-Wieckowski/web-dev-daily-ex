@@ -5,7 +5,11 @@ const SettingsForm = ({ onSettingsUserSubmit }) => {
   const [time, setTime] = useState('');
 
   const handleSubmit = () => {
-    onSettingsUserSubmit([date, time]);
+    if (date && time) {
+      onSettingsUserSubmit([date, time]);
+    } else {
+      alert('Both date and time fields are required.');
+    }
   };
 
   return (
@@ -22,7 +26,7 @@ const SettingsForm = ({ onSettingsUserSubmit }) => {
             type="date"
             id="date"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            required=""
+            required
             onChange={(e) => setDate(e.target.value)}
           />
         </div>
@@ -37,7 +41,7 @@ const SettingsForm = ({ onSettingsUserSubmit }) => {
             type="time"
             id="time"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            required=""
+            required
             onChange={(e) => setTime(e.target.value)}
           />
         </div>
