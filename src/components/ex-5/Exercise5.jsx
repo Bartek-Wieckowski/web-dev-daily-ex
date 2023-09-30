@@ -6,8 +6,8 @@ const Exercise5 = () => {
   const [isOpenSettings, setIsOpenSettings] = useState(false);
   const [userChoice, setUserChoice] = useState([]);
 
-  const splitDate = userChoice[0].split('-');
-  const splitTime = userChoice[1].split(':');
+  const splitDate = userChoice[0] ? userChoice[0].split('-') : [];
+  const splitTime = userChoice[1] ? userChoice[1].split(':') : [];
 
   const userValues = [...splitDate, ...splitTime];
 
@@ -35,7 +35,11 @@ const Exercise5 = () => {
             onSettingsUserSubmit={onSettingsUserSubmit}
           />
         )}
-        <div className="flex items-center justify-center max-w-[800px] mx-auto  h-1/2"></div>
+        <div className="flex items-center justify-center max-w-[800px] mx-auto  h-1/2 no_scroll">
+          <h1 className="text-5xl text-gray-300 font-medium leading-normal">
+            Until new beginnings
+          </h1>
+        </div>
       </div>
     </section>
   );
