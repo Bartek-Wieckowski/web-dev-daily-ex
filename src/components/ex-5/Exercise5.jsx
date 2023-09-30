@@ -6,6 +6,11 @@ const Exercise5 = () => {
   const [isOpenSettings, setIsOpenSettings] = useState(false);
   const [userChoice, setUserChoice] = useState([]);
 
+  const splitDate = userChoice[0].split('-');
+  const splitTime = userChoice[1].split(':');
+
+  const userValues = [...splitDate, ...splitTime];
+
   const handleToggleSettings = () => {
     setIsOpenSettings((prev) => !prev);
   };
@@ -14,6 +19,7 @@ const Exercise5 = () => {
     setUserChoice(value);
   };
 
+  console.log(userValues);
   return (
     <section className="bg-blue-100 text-black flex flex-col justify-center ">
       <div className="bg-[url('./assets/ex-5/bgex5.jpg')] bg-cover bg-center w-full no_scroll relative">
