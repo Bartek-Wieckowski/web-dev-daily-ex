@@ -1,39 +1,43 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react';
 
 function useCountdown(targetDate) {
-    const [countDown, setCountDown] = useState(countDownDate - new Date().getTime())
     const countDownDate = new Date(
         targetDate.year,
         targetDate.month - 1,
-        targetDate.day,
+        targetDate.days,
         targetDate.hours,
         targetDate.minutes,
         0
-    ).getTime()
+    ).getTime();
 
+    const [countDown, setCountDown] = useState(
+        countDownDate - new Date().getTime()
+    );
     useEffect(() => {
         if (countDownDate <= 0) {
             setCountDown(0);
-            return
+            return;
         }
         const interval = setInterval(() => {
-            setCountDown(countDownDate - new Date().getTime())
+            setCountDown(countDownDate - new Date().getTime());
         }, 1000);
-        return () => clearInterval(interval)
+        return () => clearInterval(interval);
     }, [countDownDate]);
 
-    calculateTimeUnitsFromCountdown(countDown)
+    return calculateTimeUnitsFromCountdown(countDown);
 }
 
 const calculateTimeUnitsFromCountdown = (countDownValues) => {
     const days = Math.floor(countDownValues / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((countDownValues % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((countDownValues % (1000 * 60 * 60)) / (1000 * 60));
+    const hours = Math.floor(
+        (countDownValues % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    const minutes = Math.floor(
+        (countDownValues % (1000 * 60 * 60)) / (1000 * 60)
+    );
     const seconds = Math.floor((countDownValues % (1000 * 60)) / 1000);
 
-    return [days, hours, minutes, seconds]
+    return [days, hours, minutes, seconds];
+};
 
-}
-
-
-export { useCountdown }
+export { useCountdown };
