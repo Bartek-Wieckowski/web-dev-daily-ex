@@ -36,3 +36,23 @@ body {
 .ex4-transition {
   transition: max-height 0.3s ease-in;
 }
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.025);
+    opacity: 0.1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.ex-5-its-comming-now {
+  box-shadow: 0px 0px 12px 12px red;
+  animation: pulse 1.5s infinite;
+  border-radius: 12px;
+}
