@@ -15,7 +15,7 @@ const Exercise5 = () => {
   const userValuesObj = {
     year: Number(year),
     month: Number(month),
-    days: Number(day),
+    day: Number(day),
     hours: Number(hours),
     minutes: Number(minutes),
     seconds: 0,
