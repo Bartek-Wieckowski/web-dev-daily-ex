@@ -4,25 +4,29 @@ function useCountdown(targetDate) {
     const countDownDate = new Date(
         targetDate.year,
         targetDate.month - 1,
-        targetDate.days,
+        targetDate.day,
         targetDate.hours,
         targetDate.minutes,
         0
     ).getTime();
 
-    const [countDown, setCountDown] = useState(
-        countDownDate - new Date().getTime()
-    );
+    const timeDifference = countDownDate - new Date().getTime();
+
+    const [countDown, setCountDown] = useState(timeDifference);
+
     useEffect(() => {
-        if (countDownDate <= 0) {
+        const interval = setInterval(() => {
+            setCountDown(timeDifference);
+        }, 1000);
+
+        if (timeDifference <= 0) {
             setCountDown(0);
+            clearInterval(interval);
             return;
         }
-        const interval = setInterval(() => {
-            setCountDown(countDownDate - new Date().getTime());
-        }, 1000);
+
         return () => clearInterval(interval);
-    }, [countDownDate]);
+    }, [timeDifference]);
 
     return calculateTimeUnitsFromCountdown(countDown);
 }
