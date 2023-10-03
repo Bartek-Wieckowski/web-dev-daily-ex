@@ -7,6 +7,7 @@ const SettingsForm = ({ onSettingsUserSubmit }) => {
   const handleSubmit = () => {
     if (date && time) {
       onSettingsUserSubmit([date, time]);
+      localStorage.removeItem('countDownDate');
     } else {
       alert('Both date and time fields are required.');
     }

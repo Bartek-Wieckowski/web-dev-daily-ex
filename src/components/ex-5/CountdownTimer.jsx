@@ -17,6 +17,8 @@ const CountdownTimer = ({ targetDate }) => {
       days * 24 * 60 * 60 + hours * 60 * 60 + minutes * 60 + seconds;
     if (remainingTimeInSeconds <= 900) {
       setPulseAlert(true);
+    } else {
+      setPulseAlert(false);
     }
   }, [days, hours, minutes, seconds]);
 

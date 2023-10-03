@@ -1,47 +1,55 @@
 import { useEffect, useState } from 'react';
 
 function useCountdown(targetDate) {
-    const countDownDate = new Date(
+  const storedCountDownDate = localStorage.getItem('countDownDate');
+  const initialCountDownDate = storedCountDownDate
+    ? new Date(parseInt(storedCountDownDate, 10))
+    : new Date(
         targetDate.year,
         targetDate.month - 1,
         targetDate.day,
         targetDate.hours,
         targetDate.minutes,
         0
-    ).getTime();
+      );
 
-    const timeDifference = countDownDate - new Date().getTime();
+  const countDownDate = initialCountDownDate.getTime();
 
-    const [countDown, setCountDown] = useState(timeDifference);
+  const timeDifference = countDownDate - new Date().getTime();
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCountDown(timeDifference);
-        }, 1000);
+  const [countDown, setCountDown] = useState(timeDifference);
 
-        if (timeDifference <= 0) {
-            setCountDown(0);
-            clearInterval(interval);
-            return;
-        }
+  useEffect(() => {
+    localStorage.setItem('countDownDate', countDownDate.toString());
 
-        return () => clearInterval(interval);
-    }, [timeDifference]);
+    const interval = setInterval(() => {
+      setCountDown(timeDifference);
+    }, 1000);
 
-    return calculateTimeUnitsFromCountdown(countDown);
+    if (timeDifference <= 0) {
+      setCountDown(0);
+      clearInterval(interval);
+      localStorage.removeItem('countDownDate');
+      return;
+    }
+
+    return () => clearInterval(interval);
+  }, [timeDifference, countDownDate]);
+
+  return calculateTimeUnitsFromCountdown(countDown);
 }
 
 const calculateTimeUnitsFromCountdown = (countDownValues) => {
-    const days = Math.floor(countDownValues / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(
-        (countDownValues % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    const minutes = Math.floor(
-        (countDownValues % (1000 * 60 * 60)) / (1000 * 60)
-    );
-    const seconds = Math.floor((countDownValues % (1000 * 60)) / 1000);
+  const days = Math.floor(countDownValues / (1000 * 60 * 60 * 24));
+  const hours = Math.floor(
+    (countDownValues % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  );
+  const minutes = Math.floor(
+    (countDownValues % (1000 * 60 * 60)) / (1000 * 60)
+  );
+  const seconds = Math.floor((countDownValues % (1000 * 60)) / 1000);
 
-    return [days, hours, minutes, seconds];
+  return [days, hours, minutes, seconds];
 };
 
 export { useCountdown };
