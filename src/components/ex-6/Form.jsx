@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import FormLogin from './FormLogin';
+import FormSignup from './FormSignup';
 
 const Form = () => {
   const [activeTabLogIn, setactiveTabLogIn] = useState(true);
@@ -36,6 +37,7 @@ const Form = () => {
       </div>
 
       {activeTabLogIn && <FormLogin />}
+      {activeTabSignUp && <FormSignup />}
     </div>
   );
 };
