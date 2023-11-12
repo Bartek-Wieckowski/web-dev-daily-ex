@@ -16,20 +16,20 @@ const Form = () => {
 
   return (
     <div className="relative max-w-[500px] pt-10 pb-20 mx-auto bg-slate-700 text-white rounded-3xl">
-      <div className="absolute -top-7 left-1/2 w-14 h-14 bg-teal-400 ex6-transform-element"></div>
+      <div className="absolute -top-7 left-1/2 w-14 h-14 bg-teal-400 "></div>
       <div className="flex items-center justify-between max-w-[300px] py-10 mx-auto">
         <button
           onClick={() => handleLogIn()}
-          className={`border-b-2 border-gray-500 ${
-            activeTabLogIn ? 'border-gray-100' : ''
+          className={`border-b-2  ${
+            activeTabLogIn ? 'border-gray-100' : 'border-gray-500'
           }`}
         >
           Log in
         </button>
         <button
           onClick={() => handleSignUp()}
-          className={`border-b-2 border-gray-500 ${
-            activeTabSignUp ? 'border-gray-100' : ''
+          className={`border-b-2  ${
+            activeTabSignUp ? 'border-gray-100' : 'border-gray-500'
           }`}
         >
           Sign up
