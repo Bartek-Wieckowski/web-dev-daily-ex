@@ -1,13 +1,9 @@
-import React, { useReducer } from 'react';
 import FormLogin from './FormLogin';
 import FormSignup from './FormSignup';
-import formReducer, { initialState } from './FormReducer';
+import { useForm } from './FormContext';
 
 const Form = () => {
-  const [{ loginTab, signupTab }, dispatch] = useReducer(
-    formReducer,
-    initialState
-  );
+  const { loginTab, signupTab, dispatch } = useForm();
 
   return (
     <div className="relative max-w-[500px] pt-10 pb-20 mx-auto bg-slate-700 text-white rounded-3xl">
