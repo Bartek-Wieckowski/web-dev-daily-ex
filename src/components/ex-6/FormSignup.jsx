@@ -28,7 +28,7 @@ const FormSignup = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const validationErrorsOptions = {
@@ -47,8 +47,11 @@ const FormSignup = () => {
     setValidationErrors(validationErrorsOptions);
 
     if (Object.values(validationErrorsOptions).some((error) => error !== '')) {
+      setIsSubmitting(false);
       return;
     } else {
+      setIsSubmitting(true);
+
       const encodedPassword = btoa(formData.password);
       const encodedRePassword = btoa(formData.rePassword);
 
@@ -59,6 +62,8 @@ const FormSignup = () => {
         password: encodedPassword,
         rePassword: encodedRePassword,
       };
+
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
       localStorage.setItem('user', JSON.stringify(registerUser));
       dispatch({ type: 'user/registered', payload: registerUser });
@@ -72,6 +77,7 @@ const FormSignup = () => {
         password: '',
         rePassword: '',
       });
+      setIsSubmitting(false);
     }
   };
 
@@ -153,7 +159,7 @@ const FormSignup = () => {
           type="submit"
           className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
         >
-          Sign Up!
+          {!isSubmitting ? 'Sign Up!' : 'Waiting...'}
         </button>
       </div>
     </form>
