@@ -9,9 +9,15 @@ const FormSignup = () => {
     password: '',
     rePassword: '',
   });
+  const [validationErrors, setValidationErrors] = useState({
+    firstname: '',
+    email: '',
+    password: '',
+    rePassword: '',
+  });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errors, setErrors] = useState([]);
+
   const { dispatch } = useForm();
 
   const handleInputChange = (e) => {
@@ -24,29 +30,49 @@ const FormSignup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const encodedPassword = btoa(formData.password);
-    const encodedRePassword = btoa(formData.rePassword);
 
-    const registerUser = {
-      firstname: formData.firstname,
-      lastname: formData.lastname,
-      email: formData.email,
-      password: encodedPassword,
-      rePassword: encodedRePassword,
+    const validationErrorsOptions = {
+      firstname: formData.firstname === '' ? 'This field is required' : '',
+      email:
+        formData.email === '' || !formData.email.includes('@')
+          ? 'This field is required and must have @'
+          : '',
+      password: formData.password === '' ? 'This field is required' : '',
+      rePassword:
+        formData.rePassword === '' || formData.rePassword !== formData.password
+          ? 'Passwords do not match'
+          : '',
     };
 
-    localStorage.setItem('user', JSON.stringify(registerUser));
-    dispatch({ type: 'user/registered', payload: registerUser });
+    setValidationErrors(validationErrorsOptions);
 
-    dispatch({ type: 'loginTab/actived' });
+    if (Object.values(validationErrorsOptions).some((error) => error !== '')) {
+      return;
+    } else {
+      const encodedPassword = btoa(formData.password);
+      const encodedRePassword = btoa(formData.rePassword);
 
-    setFormData({
-      firstname: '',
-      lastname: '',
-      email: '',
-      password: '',
-      rePassword: '',
-    });
+      const registerUser = {
+        firstname: formData.firstname,
+        lastname: formData.lastname,
+        email: formData.email,
+        password: encodedPassword,
+        rePassword: encodedRePassword,
+      };
+
+      localStorage.setItem('user', JSON.stringify(registerUser));
+      dispatch({ type: 'user/registered', payload: registerUser });
+
+      dispatch({ type: 'loginTab/actived' });
+
+      setFormData({
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: '',
+        rePassword: '',
+      });
+    }
   };
 
   return (
@@ -56,7 +82,9 @@ const FormSignup = () => {
           type="text"
           id="firstname"
           name="firstname"
-          className={`block w-[50%] mx-auto px-4 py-3 ps-10 text-sm rounded-2xl bg-gray-600 text-white`}
+          className={`block w-[50%] mx-auto px-4 py-3 ps-10 text-sm rounded-2xl bg-gray-600 text-white ${
+            validationErrors.firstname ? 'border-rose-400 border' : ''
+          }`}
           placeholder="Firstname"
           value={formData.firstname}
           onChange={handleInputChange}
@@ -75,29 +103,51 @@ const FormSignup = () => {
         type="email"
         id="email"
         name="email"
-        className="block w-[80%] mx-auto px-4 py-3 ps-10 text-sm rounded-2xl bg-gray-600 text-white "
+        className={`block w-[80%] mx-auto px-4 py-3 ps-10 text-sm rounded-2xl bg-gray-600 text-white ${
+          validationErrors.email ? 'border-rose-400 border' : ''
+        }`}
         placeholder="Email"
         value={formData.email}
         onChange={handleInputChange}
       ></input>
+      {validationErrors.email && (
+        <div className="text-rose-400 text-sm text-center">
+          {validationErrors.email}
+        </div>
+      )}
       <input
         type="password"
         id="password"
         name="password"
-        className="block w-[80%] mx-auto mt-6 px-4 py-3 ps-10 text-sm rounded-2xl bg-gray-600 text-white "
+        className={`block w-[80%] mx-auto mt-6 px-4 py-3 ps-10 text-sm rounded-2xl bg-gray-600 text-white ${
+          validationErrors.password ? 'border-rose-400 border' : ''
+        }`}
         placeholder="Password"
         value={formData.password}
         onChange={handleInputChange}
       ></input>
+      {validationErrors.password && (
+        <div className="text-rose-400 text-sm text-center">
+          {validationErrors.password}
+        </div>
+      )}
       <input
         type="password"
         id="re-password"
         name="rePassword"
-        className="block w-[80%] mx-auto mt-6 px-4 py-3 ps-10 text-sm rounded-2xl bg-gray-600 text-white "
+        className={`block w-[80%] mx-auto mt-6 px-4 py-3 ps-10 text-sm rounded-2xl bg-gray-600 text-white ${
+          validationErrors.rePassword ? 'border-rose-400 border' : ''
+        }`}
         placeholder="Repeat password"
         value={formData.rePassword}
         onChange={handleInputChange}
       ></input>
+      {validationErrors.rePassword && (
+        <div className="text-rose-400 text-sm text-center">
+          {validationErrors.rePassword}
+        </div>
+      )}
+
       <div className="w-[80%] mx-auto mt-6">
         <button
           type="submit"
