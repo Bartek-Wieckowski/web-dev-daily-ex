@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from './FormContext';
 
 const FormSignup = () => {
@@ -36,6 +36,9 @@ const FormSignup = () => {
     };
 
     localStorage.setItem('user', JSON.stringify(registerUser));
+    dispatch({ type: 'user/registered', payload: registerUser });
+
+    dispatch({ type: 'loginTab/actived' });
 
     setFormData({
       firstname: '',
