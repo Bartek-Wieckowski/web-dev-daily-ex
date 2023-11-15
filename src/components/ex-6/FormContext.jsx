@@ -1,4 +1,4 @@
-import { createContext, useReducer, useContext } from 'react';
+import { createContext, useReducer, useContext, useEffect } from 'react';
 
 const FormContext = createContext();
 
@@ -34,6 +34,11 @@ function formReducer(state, action) {
         ...state,
         user: action.payload,
       };
+    case 'user/fetchedFromDB':
+      return {
+        ...state,
+        user: action.payload,
+      };
 
     default:
       throw new Error('Unknown action');
@@ -45,6 +50,13 @@ function FormProvider({ children }) {
     formReducer,
     initialState
   );
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      dispatch({ type: 'user/fetchedFromDB', payload: JSON.parse(storedUser) });
+    }
+  }, []);
 
   return (
     <FormContext.Provider value={{ dispatch, loginTab, signupTab, user }}>
