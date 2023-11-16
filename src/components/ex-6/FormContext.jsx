@@ -13,6 +13,7 @@ const initialState = {
     rePassword: '',
   },
   rememberMe: false,
+  logged: false,
 };
 
 function formReducer(state, action) {
@@ -34,6 +35,17 @@ function formReducer(state, action) {
         ...state,
         user: action.payload,
       };
+    case 'user/logged':
+      return {
+        ...state,
+        logged: true,
+      };
+    case 'user/logouted':
+      return {
+        ...state,
+        logged: false,
+        rememberMe: false,
+      };
     case 'user/fetchedFromDB':
       return {
         ...state,
@@ -46,7 +58,7 @@ function formReducer(state, action) {
 }
 
 function FormProvider({ children }) {
-  const [{ loginTab, signupTab, user }, dispatch] = useReducer(
+  const [{ loginTab, signupTab, user, logged }, dispatch] = useReducer(
     formReducer,
     initialState
   );
@@ -59,7 +71,9 @@ function FormProvider({ children }) {
   }, []);
 
   return (
-    <FormContext.Provider value={{ dispatch, loginTab, signupTab, user }}>
+    <FormContext.Provider
+      value={{ dispatch, loginTab, signupTab, user, logged }}
+    >
       {children}
     </FormContext.Provider>
   );
