@@ -3,10 +3,11 @@ import { notify } from '../../helpers';
 import { useForm } from './FormContext';
 
 const FormLogin = () => {
-  const { dispatch } = useForm();
+  const { dispatch, user } = useForm();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
+    rememberMe: false,
   });
   const [validationErrors, setValidationErrors] = useState({
     email: '',
@@ -16,11 +17,24 @@ const FormLogin = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: type === 'checkbox' ? checked : value,
     });
+  };
+
+  const handleShowPass = () => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const { password } = JSON.parse(storedUser);
+      const decodedStoredPassword = atob(password);
+      notify(
+        true,
+        'password-forgot',
+        `Your actual password: ${decodedStoredPassword} `
+      );
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -113,10 +127,18 @@ const FormLogin = () => {
             id="remember"
             name="remember"
             className="inline-block mr-6"
+            checked={formData.rememberMe}
+            onChange={handleInputChange}
           ></input>
           Remember Me
         </label>
-        <button className="text-purple-400">Forgot Password</button>
+        <button
+          type="button"
+          className="text-purple-400"
+          onClick={() => handleShowPass()}
+        >
+          Forgot Password
+        </button>
       </div>
       <div className="w-[80%] mx-auto mt-6">
         <button
