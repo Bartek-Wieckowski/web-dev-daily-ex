@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useForm } from './FormContext';
+import { notify } from '../../helpers';
 
 const FormSignup = () => {
   const [formData, setFormData] = useState({
@@ -48,6 +49,7 @@ const FormSignup = () => {
 
     if (Object.values(validationErrorsOptions).some((error) => error !== '')) {
       setIsSubmitting(false);
+      notify(true, 'registered-reject', 'Something went wrong!');
       return;
     } else {
       setIsSubmitting(true);
@@ -63,6 +65,7 @@ const FormSignup = () => {
         rePassword: encodedRePassword,
       };
 
+      notify(true, 'registered-success', 'Your account was created!');
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
       localStorage.setItem('user', JSON.stringify(registerUser));
