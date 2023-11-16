@@ -46,6 +46,20 @@ function formReducer(state, action) {
         logged: false,
         rememberMe: false,
       };
+    case 'user/deleted':
+      return {
+        loginTab: false,
+        signupTab: true,
+        user: {
+          firstname: '',
+          lastname: '',
+          email: '',
+          password: '',
+          rePassword: '',
+        },
+        logged: false,
+        rememberMe: false,
+      };
     case 'user/fetchedFromDB':
       return {
         ...state,
