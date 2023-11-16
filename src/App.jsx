@@ -1,5 +1,6 @@
 import { useState, Suspense, lazy, useEffect } from 'react';
 import { Route, Routes, Link, useLocation } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
 // components/pages
 const Home = lazy(() => import('./components/home/Home'));
 const PageNotFound = lazy(() =>
