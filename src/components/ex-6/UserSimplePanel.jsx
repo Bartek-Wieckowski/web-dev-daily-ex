@@ -5,10 +5,20 @@ const UserSimplePanel = () => {
   const { dispatch } = useForm();
   const handleLogout = () => {
     dispatch({ type: 'user/logouted' });
+    unsetRememberMe();
   };
   const handleDeletedAccount = () => {
     dispatch({ type: 'user/deleted' });
     localStorage.removeItem('user');
+  };
+
+  const unsetRememberMe = () => {
+    const storedUserString = localStorage.getItem('user');
+    if (storedUserString) {
+      const storedUser = JSON.parse(storedUserString);
+      storedUser.rememberMe = false;
+      localStorage.setItem('user', JSON.stringify(storedUser));
+    }
   };
 
   const { user } = useForm();
