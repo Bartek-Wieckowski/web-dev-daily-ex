@@ -63,6 +63,7 @@ const FormSignup = () => {
         email: formData.email,
         password: encodedPassword,
         rePassword: encodedRePassword,
+        rememberMe: false,
       };
 
       notify(true, 'registered-success', 'Your account was created!');
