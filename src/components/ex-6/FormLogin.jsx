@@ -3,11 +3,10 @@ import { notify } from '../../helpers';
 import { useForm } from './FormContext';
 
 const FormLogin = () => {
-  const { dispatch, user } = useForm();
+  const { dispatch } = useForm();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    rememberMe: false,
   });
   const [validationErrors, setValidationErrors] = useState({
     email: '',
@@ -15,25 +14,41 @@ const FormLogin = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: value,
     });
   };
 
   const handleShowPass = () => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
-      const { password } = JSON.parse(storedUser);
+      const { password, email } = JSON.parse(storedUser);
       const decodedStoredPassword = atob(password);
       notify(
         true,
         'password-forgot',
-        `Your actual password: ${decodedStoredPassword} `
+        `Your actual password:
+        ${decodedStoredPassword} and you pass this e-mail 
+        ${email} `
       );
+    }
+  };
+
+  const handleInputCheck = () => {
+    setRememberMe((prev) => !prev);
+  };
+
+  const rememberMeActive = () => {
+    const storedUserString = localStorage.getItem('user');
+    if (storedUserString) {
+      const storedUser = JSON.parse(storedUserString);
+      storedUser.rememberMe = rememberMe;
+      localStorage.setItem('user', JSON.stringify(storedUser));
     }
   };
 
@@ -64,7 +79,10 @@ const FormLogin = () => {
           if (decodedStoredPassword === formData.password) {
             await new Promise((resolve) => setTimeout(resolve, 1000));
             dispatch({ type: 'user/logged' });
+            dispatch({ type: 'user/remembered', payload: rememberMe });
+            rememberMeActive();
             notify(true, 'login-success', "You're logged!");
+
             setFormData({
               email: '',
               password: '',
@@ -127,8 +145,8 @@ const FormLogin = () => {
             id="remember"
             name="remember"
             className="inline-block mr-6"
-            checked={formData.rememberMe}
-            onChange={handleInputChange}
+            checked={rememberMe}
+            onChange={handleInputCheck}
           ></input>
           Remember Me
         </label>
