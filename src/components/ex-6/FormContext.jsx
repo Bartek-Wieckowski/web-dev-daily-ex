@@ -11,8 +11,8 @@ const initialState = {
     email: '',
     password: '',
     rePassword: '',
+    rememberMe: false,
   },
-  rememberMe: false,
   logged: false,
 };
 
@@ -44,7 +44,10 @@ function formReducer(state, action) {
       return {
         ...state,
         logged: false,
-        rememberMe: false,
+        user: {
+          ...state.user,
+          rememberMe: false,
+        },
       };
     case 'user/deleted':
       return {
@@ -56,14 +59,22 @@ function formReducer(state, action) {
           email: '',
           password: '',
           rePassword: '',
+          rememberMe: false,
         },
         logged: false,
-        rememberMe: false,
       };
     case 'user/fetchedFromDB':
       return {
         ...state,
         user: action.payload,
+      };
+    case 'user/remembered':
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          rememberMe: action.payload,
+        },
       };
 
     default:
