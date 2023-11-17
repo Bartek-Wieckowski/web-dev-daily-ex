@@ -90,6 +90,7 @@ const FormLogin = () => {
             setIsSubmitting(false);
           } else {
             notify(true, 'login-reject', 'Wrong password');
+            setIsSubmitting(false);
           }
         } else {
           notify(
@@ -97,9 +98,11 @@ const FormLogin = () => {
             'login-reject',
             "This email don't exist in our Database"
           );
+          setIsSubmitting(false);
         }
       } else {
         notify(true, 'login-reject', "We don't have user in our Database");
+        setIsSubmitting(false);
       }
     }
   };
