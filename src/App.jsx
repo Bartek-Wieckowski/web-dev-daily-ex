@@ -11,6 +11,7 @@ const Exercise3 = lazy(() => import('./components/ex-3/Exercise3'));
 const Exercise4 = lazy(() => import('./components/ex-4/Exercise4'));
 const Exercise5 = lazy(() => import('./components/ex-5/Exercise5'));
 const Exercise6 = lazy(() => import('./components/ex-6/Exercise6'));
+const Exercise7 = lazy(() => import('./components/ex-7/Exercise7'));
 
 import Spinner from './components/spinner/Spinner';
 
@@ -62,6 +63,7 @@ function App() {
           <Route path="/ex4" element={<Exercise4 />} />
           <Route path="/ex5" element={<Exercise5 />} />
           <Route path="/ex6" element={<Exercise6 />} />
+          <Route path="/ex7" element={<Exercise7 />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Suspense>
