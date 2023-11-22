@@ -1,28 +1,20 @@
-import React, { useState } from 'react';
+// PriceMembership.jsx
+import React from 'react';
 
-const PriceMembership = ({ options }) => {
-  const [selectedPrice, setSelectedPrice] = useState(null);
-
-  const handlePriceChange = (e) => {
-    setSelectedPrice(Number(e.target.value));
-  };
-
+const PriceMembership = ({ options, onOptionChange }) => {
+  const { id, price, term } = options;
   return (
-    <form className="flex flex-col gap-2 py-2 px-1">
-      {options.map((o) => (
-        <label key={o.id}>
-          <input
-            type="radio"
-            value={o.id.toString()}
-            checked={
-              selectedPrice === null ? false : selectedPrice === Number(o.id)
-            }
-            onChange={handlePriceChange}
-          />
-          ${o.price} / {o.term} months
-        </label>
-      ))}
-    </form>
+    <div className="flex flex-col gap-2 py-2 px-1">
+      <label key={id}>
+        <input
+          type="radio"
+          name={`membershipOption`}
+          value={id}
+          onChange={() => onOptionChange(id)}
+        />
+        ${price} / {term} months
+      </label>
+    </div>
   );
 };
 

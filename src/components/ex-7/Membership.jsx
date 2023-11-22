@@ -1,7 +1,8 @@
+// Membership.jsx
 import React from 'react';
 import PriceMembership from './PriceMembership';
 
-const Membership = ({ details }) => {
+const Membership = ({ details, onOptionChange }) => {
   const {
     id,
     title,
@@ -10,6 +11,7 @@ const Membership = ({ details }) => {
     specialBadge,
     specialBadgeText,
   } = details;
+
   return (
     <div
       className={`bg-white shadow-2xl rounded-lg my-4 relative ${
@@ -27,7 +29,13 @@ const Membership = ({ details }) => {
           <p className="text-black text-sm max-width">{detailsText}</p>
         </div>
         <div className="bg-teal-200 basis-[200px]">
-          <PriceMembership options={options} />
+          {options.map((o) => (
+            <PriceMembership
+              key={o.id}
+              options={o}
+              onOptionChange={onOptionChange}
+            />
+          ))}
         </div>
       </div>
     </div>
