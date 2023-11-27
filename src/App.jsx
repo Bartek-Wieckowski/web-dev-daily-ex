@@ -21,7 +21,12 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname === '/') setShowExNum(0);
+    if (location.pathname === '/') {
+      setShowExNum(0);
+    } else {
+      const extractedNumber = location.pathname.slice(3);
+      setShowExNum(Number(extractedNumber));
+    }
   }, [location.pathname]);
 
   const handleClickPrev = () => {
