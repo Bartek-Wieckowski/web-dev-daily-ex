@@ -1,5 +1,22 @@
+import { useState } from "react";
 import { HiMiniXMark } from "react-icons/hi2";
+import Button from "./Button";
+
 function Exercise9() {
+  const [selectedButton, setSelectedButton] = useState(null);
+
+  const buttons = [
+    { id: 1, emoji: "😥", label: "Unhappy" },
+    { id: 2, emoji: "😑", label: "Neutral" },
+    { id: 3, emoji: "😁", label: "Satisfied" },
+  ];
+
+  function handleButtonClick(buttonId) {
+    if (selectedButton === null) {
+      setSelectedButton(buttonId);
+    }
+  }
+
   return (
     <section className="grid h-screen place-items-center bg-stone-100">
       <div className="w-full max-w-[500px] rounded-lg bg-white shadow-lg">
@@ -12,18 +29,19 @@ function Exercise9() {
             performance
           </p>
           <div className="flex justify-around">
-            <div className="flex cursor-pointer flex-col items-center gap-3 rounded-lg p-3 transition-shadow hover:shadow-xl">
-              <div className="text-4xl">😪</div>
-              <p className="text-center text-lg text-gray-300">Unhappy</p>
-            </div>
-            <div className="flex cursor-pointer flex-col items-center gap-3 rounded-lg p-3 transition-shadow hover:shadow-xl">
-              <div className="text-4xl">😑</div>
-              <p className="text-center text-lg text-gray-300">Neutral</p>
-            </div>
-            <div className="flex cursor-pointer flex-col items-center gap-3 rounded-lg p-3 transition-shadow hover:shadow-xl">
-              <div className="text-4xl">😁</div>
-              <p className="text-center text-lg text-gray-300">Satisfied</p>
-            </div>
+            {buttons.map((button) => (
+              <Button
+                key={button.id}
+                id={button.id}
+                emoji={button.emoji}
+                label={button.label}
+                onClick={handleButtonClick}
+                selected={selectedButton === button.id}
+                disabled={
+                  selectedButton !== null && selectedButton !== button.id
+                }
+              />
+            ))}
           </div>
           <div className="mx-auto my-6 w-full max-w-[150px]">
             <button className="block w-full rounded-md bg-slate-900 px-6 py-3 text-center capitalize text-white transition-colors hover:bg-slate-600">
@@ -31,7 +49,6 @@ function Exercise9() {
             </button>
           </div>
         </div>
-        test
       </div>
     </section>
   );
