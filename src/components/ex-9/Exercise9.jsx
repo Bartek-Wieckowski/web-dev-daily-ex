@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { HiMiniXMark } from "react-icons/hi2";
 import Button from "./Button";
+import { createPortal } from "react-dom";
+import ThanksModal from "./ThanksModal";
 
 function Exercise9() {
   const [selectedButton, setSelectedButton] = useState(null);
@@ -18,8 +20,8 @@ function Exercise9() {
   }
 
   return (
-    <section className="grid h-screen place-items-center bg-stone-100">
-      <div className="w-full max-w-[500px] rounded-lg bg-white shadow-lg">
+    <section className="relative grid h-screen place-items-center bg-stone-100">
+      <div className="z-0 w-full max-w-[500px] rounded-lg bg-white shadow-lg">
         <div className="flex h-full flex-col">
           <div className="ml-auto p-4">
             <HiMiniXMark className="cursor-pointer text-3xl font-bold text-gray-500" />
@@ -50,6 +52,7 @@ function Exercise9() {
           </div>
         </div>
       </div>
+      {selectedButton && createPortal(<ThanksModal />, document.body)}
     </section>
   );
 }
