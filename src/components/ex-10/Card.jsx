@@ -1,4 +1,5 @@
 import { HiCheck } from "react-icons/hi2";
+import PropTypes from "prop-types";
 
 function Card({ cardInfo, selected, onHandleSelected }) {
   const { options } = cardInfo;
@@ -30,8 +31,11 @@ function Card({ cardInfo, selected, onHandleSelected }) {
       </div>
       <div className="h-[1px] w-full bg-blue-800"></div>
       <div className="flex flex-col items-center gap-3">
-        {options.features.map((item) => (
-          <div className="grid max-w-[300px] grid-cols-[15px_max-content] items-center justify-center gap-3">
+        {options.features.map((item, index) => (
+          <div
+            key={index}
+            className="grid max-w-[300px] grid-cols-[15px_max-content] items-center justify-center gap-3"
+          >
             <div className="w-full">
               <HiCheck />
             </div>
@@ -44,3 +48,9 @@ function Card({ cardInfo, selected, onHandleSelected }) {
 }
 
 export default Card;
+
+Card.propTypes = {
+  cardInfo: PropTypes.array,
+  selected: PropTypes.string,
+  onHandleSelected: PropTypes.func,
+};
