@@ -50,7 +50,7 @@ function Card({ cardInfo, selected, onHandleSelected }) {
 export default Card;
 
 Card.propTypes = {
-  cardInfo: PropTypes.array,
-  selected: PropTypes.string,
+  cardInfo: PropTypes.object,
+  selected: PropTypes.bool,
   onHandleSelected: PropTypes.func,
 };
